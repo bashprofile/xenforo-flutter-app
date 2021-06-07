@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:xenforo/models/forum.dart';
-import 'package:xenforo/screens/forumThread.dart';
+import '../../models/forum.dart';
+import '../../screens/forumThread.dart';
 import 'package:page_transition/page_transition.dart';
 
 class BriefForumBox extends StatefulWidget {
-    final Forum forumData;
-  BriefForumBox({
-    @required this.forumData
-  });
+  final Forum forumData;
+  BriefForumBox({@required this.forumData});
   @override
   _BriefForumBoxState createState() {
     return _BriefForumBoxState();
@@ -15,7 +13,6 @@ class BriefForumBox extends StatefulWidget {
 }
 
 class _BriefForumBoxState extends State<BriefForumBox> {
-
   @override
   Widget build(BuildContext context) {
     print(widget.forumData.description);
@@ -27,8 +24,15 @@ class _BriefForumBoxState extends State<BriefForumBox> {
         color: Color(0xff1281dd),
       ),
       child: new ListTile(
-        title: new Text(widget.forumData.title, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 16.0),),
-        subtitle: new Text(widget.forumData.description, style: TextStyle(color: Colors.white),),
+        title: new Text(
+          widget.forumData.title,
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.w700, fontSize: 16.0),
+        ),
+        subtitle: new Text(
+          widget.forumData.description,
+          style: TextStyle(color: Colors.white),
+        ),
         leading: new Icon(
           Icons.apps,
           color: Colors.white,
@@ -39,12 +43,11 @@ class _BriefForumBoxState extends State<BriefForumBox> {
         ),
         onTap: () {
           Navigator.push(
-                                            context,
-                                            PageTransition(
-                                                type: PageTransitionType
-                                                    .rightToLeft,
-                                                child: ForumThread(title: widget.forumData.title,
-                                                id:widget.forumData.id)));
+              context,
+              PageTransition(
+                  type: PageTransitionType.rightToLeft,
+                  child: ForumThread(
+                      title: widget.forumData.title, id: widget.forumData.id)));
         },
       ),
     );

@@ -1,15 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:xenforo/helpers/key.dart';
 import 'dart:async';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:xenforo/components/loader.dart';
-import 'package:xenforo/components/buttons/borderButton/index.dart';
+
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:xenforo/screens/threadInfo.dart';
-import 'package:xenforo/models/forumContent.dart';
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:xenforo/providers/user.dart';
+
+import '../components/buttons/borderButton/index.dart';
+import '../components/loader.dart';
+import '../helpers/key.dart';
+import '../models/forumContent.dart';
+import '../providers/user.dart';
+import 'threadInfo.dart';
+
+var _controllerr;
 
 class NewPost extends StatefulWidget {
   NewPost(
@@ -37,8 +40,7 @@ class _NewPostState extends State<NewPost> {
   Future<dynamic> postThread() async {
     _showLoader = true;
     final response = await http.post(
-      url + 'posts/?thread_id='+widget.id.toString()+
-      '&message='+_message,
+      url + 'posts/?thread_id=' + widget.id.toString() + '&message=' + _message,
       headers: <String, String>{
         'XF-Api-Key': apiKey,
         'XF-Api-User': Provider.of<UserModel>(context, listen: false).id,
@@ -46,22 +48,11 @@ class _NewPostState extends State<NewPost> {
       },
     );
     if (response.statusCode == 200) {
-       setState((){
-         _showLoader = false;
+      setState(() {
+        _showLoader = false;
       });
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      _scaffoldKey.currentState.showSnackBar(SnackBar(
-        content: Text('Post Created Successfully',
-            style: TextStyle(
-              fontSize: 15.0,
-              color: Colors.white,
-              fontWeight: FontWeight.w300,
-            )),
-        behavior: SnackBarBehavior.floating,
-        backgroundColor: Color(0xff1281dd),
-        elevation: 0.0,
-      ));
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
@@ -70,23 +61,11 @@ class _NewPostState extends State<NewPost> {
           ),
           (Route<dynamic> route) => false);
     } else {
-      setState((){
-         _showLoader = false;
+      setState(() {
+        _showLoader = false;
       });
       // If the server did not return a 200 OK response,
       // then throw an exception.
-      _scaffoldKey.currentState.showSnackBar(SnackBar(
-        content: Text('Failed to post message',
-            style: TextStyle(
-              fontSize: 15.0,
-              color: Colors.white,
-              fontWeight: FontWeight.w300,
-            )),
-        action: SnackBarAction(label: 'RETRY', onPressed: postThread),
-        //  behavior: SnackBarBehavior.floating,
-        backgroundColor: Colors.red,
-        elevation: 0.0,
-      ));
       //throw Exception('Failed to load post thread');
     }
   }
@@ -113,9 +92,9 @@ class _NewPostState extends State<NewPost> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(
+      /*appBar: AppBar(
         title: Text(widget.title),
-      ),
+      ),*/
       body: new SingleChildScrollView(
         child: new Container(
           margin: new EdgeInsets.all(15.0),
@@ -142,11 +121,12 @@ class _NewPostState extends State<NewPost> {
                 border: Border(
               bottom: BorderSide(
                 //                    <--- top side
-                color: const Color(0xffC4C4C4),
+                //color: const Color(0xffC4C4C4),
                 width: 1.0,
               ),
             )),
             child: new TextFormField(
+              controller: _controllerr,
               keyboardType: TextInputType.multiline,
               maxLines: null,
               decoration: new InputDecoration(
@@ -168,7 +148,7 @@ class _NewPostState extends State<NewPost> {
               },
               style: new TextStyle(
                 fontSize: 16.0,
-                color: Colors.black,
+                //color: Colors.black,
                 //    height: 1.0,
               ),
               onSaved: (String val) {
@@ -176,10 +156,14 @@ class _NewPostState extends State<NewPost> {
               },
             )),
         Container(
-            margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.03),
+            margin:
+                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.03),
             child: BorderButton(
               title: 'POST',
-              onPressed: post,
+              onPressed: () {
+                post();
+                Navigator.pop(context);
+              },
             ))
       ],
     );

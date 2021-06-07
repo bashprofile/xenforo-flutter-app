@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:xenforo/components/threadForumBox/index.dart';
-import 'package:xenforo/models/forumContent.dart';
+import '../components/threadForumBox/index.dart';
+import '../models/forumContent.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:xenforo/helpers/key.dart';
-import 'package:xenforo/components/emptyData/index.dart';
-import 'package:xenforo/components/loader.dart';
-import 'package:xenforo/components/buttons/floatingButton.dart';
+import '../helpers/key.dart';
+import '../components/emptyData/index.dart';
+import '../components/loader.dart';
+import '../components/buttons/floatingButton.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:xenforo/screens/newThread.dart';
+import 'newThread.dart';
 import 'package:provider/provider.dart';
-import 'package:xenforo/providers/user.dart';
-import 'package:xenforo/screens/auth/login.dart';
-
+import '../providers/user.dart';
+import 'auth/login.dart';
 
 class ForumThread extends StatefulWidget {
   final int id;
@@ -55,19 +54,7 @@ class _ForumThreadState extends State<ForumThread> {
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
-        _scaffoldKey.currentState.showSnackBar(SnackBar(
-        content: Text('Failed to load threads',
-            style: TextStyle(
-              fontSize: 15.0,
-              color: Colors.white,
-              fontWeight: FontWeight.w300,
-            )),
-            action: SnackBarAction(label: 'RETRY', onPressed: (){fetchForumThread();}),
-        behavior: SnackBarBehavior.floating,
-        backgroundColor: Colors.red,
-        elevation: 0.0,
-      ));
-    //  throw Exception('Failed to load forums');
+      //  throw Exception('Failed to load forums');
     }
   }
 
@@ -79,25 +66,8 @@ class _ForumThreadState extends State<ForumThread> {
 
   @override
   Widget build(BuildContext context) {
-        final appState = Provider.of<UserModel>(context);
-    if(appState.id != ''){
-         _scaffoldKey.currentState.showSnackBar(SnackBar(
-        content: Text('You\'re not logged in',
-            style: TextStyle(
-              fontSize: 15.0,
-              color: Colors.white,
-              fontWeight: FontWeight.w300,
-            )),
-            action: SnackBarAction(label: 'LOGIN', onPressed: (){Navigator.push(
-          context,
-          PageTransition(
-              type: PageTransitionType
-                  .rightToLeftWithFade,
-              child: Login()));}),
-        behavior: SnackBarBehavior.floating,
-        elevation: 0.0,
-      ));
-    }
+    final appState = Provider.of<UserModel>(context);
+    if (appState.id != '') {}
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Colors.white,
@@ -139,22 +109,24 @@ class _ForumThreadState extends State<ForumThread> {
         },
       ),
       floatingActionButton: FloatingButton(
-        onPressed: appState.id != '' ?() {
-          Navigator.push(
-              context,
-              PageTransition(
-                  type: PageTransitionType.rightToLeft,
-                  child: NewThread(
-                    title: widget.title,
-                    id: widget.id,
-                  )));
-        }
-: (){   Navigator.push(
-          context,
-          PageTransition(
-              type: PageTransitionType
-                  .rightToLeftWithFade,
-              child: Login()));},
+        onPressed: appState.id != ''
+            ? () {
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.rightToLeft,
+                        child: NewThread(
+                          title: widget.title,
+                          id: widget.id,
+                        )));
+              }
+            : () {
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.rightToLeftWithFade,
+                        child: Login()));
+              },
       ),
     );
   }

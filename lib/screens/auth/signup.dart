@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:xenforo/helpers/key.dart';
-import 'package:xenforo/models/user.dart';
+import '../../helpers/key.dart';
+import '../../models/user.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:xenforo/components/loader.dart';
+import '../../components/loader.dart';
 import 'package:flutter/services.dart';
-import 'package:xenforo/components/buttons/fullButton/index.dart';
-import 'package:xenforo/screens/home.dart';
+import '../../components/buttons/fullButton/index.dart';
+import '../home.dart';
 import 'package:provider/provider.dart';
-import 'package:xenforo/providers/user.dart';
-import 'package:xenforo/screens/auth/login.dart';
+import '../../providers/user.dart';
+import 'login.dart';
 
 class SignUp extends StatefulWidget {
   SignUp({Key key, this.title}) : super(key: key);
@@ -78,17 +78,6 @@ class _SignUpState extends State<SignUp> {
       setState(() {
         _showLoader = false;
       });
-      _scaffoldKey.currentState.showSnackBar(SnackBar(
-        content: Text('Sign Up Successful',
-            style: TextStyle(
-              fontSize: 15.0,
-              color: Colors.white,
-              fontWeight: FontWeight.w300,
-            )),
-        behavior: SnackBarBehavior.floating,
-        backgroundColor: Color(0xff1281dd),
-        elevation: 0.0,
-      ));
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(

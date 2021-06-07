@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:xenforo/components/briefForumBox/index.dart';
-import 'package:xenforo/models/forum.dart';
+import '../components/briefForumBox/index.dart';
+import '../models/forum.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:xenforo/helpers/key.dart';
+import '../helpers/key.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:xenforo/screens/conversations.dart';
-import 'package:xenforo/components/emptyData/index.dart';
-import 'package:xenforo/components/loader.dart';
+import 'conversations.dart';
+import '../components/emptyData/index.dart';
+import '../components/loader.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
-import 'package:xenforo/providers/user.dart';
-import 'package:xenforo/screens/auth/login.dart';
-import 'package:xenforo/screens/profile.dart';
+import '../providers/user.dart';
+import 'auth/login.dart';
+import 'profile.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -89,25 +89,6 @@ class _MyHomePageState extends State<MyHomePage> {
       stateFunction = () {
         appState.setId('');
       };
-      _scaffoldKey.currentState.showSnackBar(SnackBar(
-        content: Text('You\'re not logged in',
-            style: TextStyle(
-              fontSize: 15.0,
-              color: Colors.white,
-              fontWeight: FontWeight.w300,
-            )),
-        action: SnackBarAction(
-            label: 'LOGIN',
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  PageTransition(
-                      type: PageTransitionType.rightToLeftWithFade,
-                      child: Login()));
-            }),
-        behavior: SnackBarBehavior.floating,
-        elevation: 0.0,
-      ));
     } else {
       stateText = 'Login';
       stateFunction = () {
