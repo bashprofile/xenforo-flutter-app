@@ -4,8 +4,10 @@ import 'screens/home.dart';
 import 'package:provider/provider.dart';
 import 'providers/user.dart';
 
-void main() => runApp(
-    ChangeNotifierProvider(create: (_) => new UserModel(), child: MyApp()));
+void main() {
+  runApp(
+      ChangeNotifierProvider(create: (_) => new UserModel(), child: MyApp()));
+}
 
 class MyApp extends StatelessWidget {
   @override

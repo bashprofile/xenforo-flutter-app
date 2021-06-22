@@ -56,6 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
+      print(response.body);
       _scaffoldKey.currentState.showSnackBar(SnackBar(
         content: Text('Failed to load Forums',
             style: TextStyle(

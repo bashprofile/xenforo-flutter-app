@@ -33,7 +33,7 @@ class _PostBoxState extends State<PostBox> {
             ListTile(
               leading: CircleAvatar(
                 foregroundImage: NetworkImage(
-                    "http://10.0.2.2/xenforo/data/avatars/o/0/" +
+                    "http://10.0.2.2/data/avatars/o/0/" +
                         (widget.post.user.id).toString() +
                         ".jpg"),
               ),

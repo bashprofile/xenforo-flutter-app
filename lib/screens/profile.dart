@@ -82,88 +82,89 @@ class _ProfileState extends State<Profile> {
             return EmptyData(title: 'Profil');
           }
           if (snapshot.hasData) {
+            print(snapshot.data.avatar_urls['h']);
             var proinfo = snapshot.data;
             return Column(
 //                crossAxisAlignment: CrossAxisAlignment.center,
 //                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        alignment: Alignment.center,
-                        width: MediaQuery.of(context).size.width - 20,
-                        margin: EdgeInsets.only(bottom: 5.0, top: 5.0),
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                colors: [Colors.blue, Colors.green]),
-                            borderRadius: BorderRadius.circular(6.0),
-                            boxShadow: [
-                              /*BoxShadow(
+              children: <Widget>[
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.all(5.0),
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              colors: [Colors.blue, Colors.green]),
+                          borderRadius: BorderRadius.circular(6.0),
+                          boxShadow: [
+                            /*BoxShadow(
                                   offset: Offset(4.0, 5.0),
                                   blurRadius: 20,
                                   spreadRadius: 1)*/
-                            ]),
-                        //height: 50.0,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.all(10),
-                              child: Row(
-                                children: [
-                                  CircleAvatar(
-                                    radius: 50,
-                                    foregroundImage: NetworkImage(
-                                        snapshot.data.avatar_urls['h']),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(left: 5),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                            "${snapshot.data.username}\n\nReactions: ${snapshot.data.reactionScore}   Çözümler: ${snapshot.data.question_solution_count}")
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Row(
+                          ]),
+                      //height: 50.0,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            margin: EdgeInsets.only(top: 10.0, left: 10.0),
-                            alignment: Alignment.center,
-                            width: 125,
-                            height: 125,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            padding: EdgeInsets.all(9),
+                            margin: EdgeInsets.all(10),
+                            child: Row(
                               children: [
-                                Text("Custom Fields"),
-                                Text(
-                                  "${snapshot.data.custom_fields['customfields']}",
-                                  textAlign: TextAlign.center,
+                                CircleAvatar(
+                                  radius: 50,
+                                  foregroundImage: NetworkImage(
+                                      (snapshot.data.avatar_urls['h'])
+                                          .toString()
+                                          .replaceAll('localhost', '10.0.2.2')),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.all(10),
+                                  child: Column(
+                                    children: [
+                                      (snapshot.data.is_admin != false
+                                          ? Container(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                "Admin",
+                                                textAlign: TextAlign.center,
+                                                textScaleFactor: 1.5,
+                                              ),
+                                              height: 25,
+                                              width: 75,
+                                              decoration: BoxDecoration(
+                                                color: Colors.red,
+                                                /*borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)*/
+                                              ),
+                                            )
+                                          : Container()),
+                                      Text(
+                                        "${snapshot.data.username}",
+                                        textScaleFactor: 1.25,
+                                      ),
+                                      Text(snapshot.data.custom_title),
+                                      Container(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                          "Reactions: ${snapshot.data.reactionScore} Solutions: ${snapshot.data.solutions}")
+                                    ],
+                                  ),
                                 )
                               ],
                             ),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(6.0),
-                                boxShadow: [
-                                  BoxShadow(
-                                      //offset: Offset(5.0, 10.0),
-                                      blurRadius: 20,
-                                      spreadRadius: 2)
-                                ]),
                           ),
                         ],
                       ),
-                    ],
-                  )
-                ]);
+                    ),
+                  ],
+                ),
+              ],
+            );
           } else if (snapshot.hasError) {
             return Text("${snapshot.error}");
           }
